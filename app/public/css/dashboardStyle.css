@@ -1,0 +1,191 @@
+.header {
+    background-color: #43b02a;
+    padding: 10px 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.header-left h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header-center {
+    flex-grow: 0.25;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.header-center input {
+    width: 500px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    padding-right: 40px;
+}
+
+.header-center button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #FFD700;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right a {
+    color: white;
+    margin-right: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.header-right a img {
+    margin-right: 8px;
+}
+
+.header-right .cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.header-right .cart span {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #FFD700;
+    color: #43b02a;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 14px 14px 0px;
+    transition: transform 0.3s ease;
+    height: 409px;
+    width: 216.2px;
+}
+
+.product-img {
+    height: 180px;
+    width: 180px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    margin: 10px 0px 0px;
+    padding: 20px;
+}
+
+.product-price {
+    font-weight: bold;
+    color: #525252;
+    font-size: 18px;
+    letter-spacing: 0em;
+    line-height: 25px;
+    text-align: left;
+}
+
+.product-title {
+    color: #525252;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+@font-face {
+    font-family: 'MyriadPro-semibold-600';
+    src: url('../fonts/MyriadPro-semibold-600.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+.add-button {
+    background-color: #43b02a;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 86px;
+    min-height: 32px;
+    max-height: 32px;
+    color: #fff;
+    border-color: #43b02a;
+    font-size: 14px;
+    font-family: 'MyriadPro-semibold-600', sans-serif;
+    font-weight: 600;
+}
+
+.add-button:hover {
+    background-color: #0056b3;
+}
+
+.filter-section h5 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.subcategoria-container {
+    display: none;
+}
+
+.spinner-container {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 36px;
+    border: 1px solid #525252;
+    border-radius: 5px;
+}
+
+.spinner-container .btn-spinner {
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner-value {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
