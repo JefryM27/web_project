@@ -3,7 +3,10 @@ document.querySelectorAll('.categoria-checkbox').forEach(function (checkbox) {
 });
 
 document.querySelectorAll('.subcategoria-checkbox, .categoria-checkbox').forEach(function (checkbox) {
-    checkbox.addEventListener('change', filterProducts);
+    checkbox.addEventListener('change', function () {
+        resetSortOrder();
+        filterProducts();
+    });
 });
 
 function toggleSubcategories() {
@@ -64,6 +67,7 @@ function filterProducts() {
     });
 
     document.getElementById('product-count').innerText = productCount + ' productos';
+    sortProductsByPrice();  // Aplicar ordenación si está seleccionada
 }
 
 function searchProducts() {
@@ -75,19 +79,31 @@ function searchProducts() {
 
         if (productName.includes(searchTerm)) {
             product.style.display = '';
+            product.closest('.col-md-3').style.display = ''; // Asegurarse de mostrar la columna completa
             productCount++;
         } else {
             product.style.display = 'none';
+            product.closest('.col-md-3').style.display = 'none'; // Ocultar la columna completa
         }
     });
 
     document.getElementById('product-count').innerText = productCount + ' productos';
+    resetSortOrder();  // Reiniciar la ordenación al buscar
+}
+
+function resetSortOrder() {
+    document.getElementById('sort-price').value = 'none';
 }
 
 function sortProductsByPrice() {
     const sortOrder = document.getElementById('sort-price').value;
     const productContainer = document.getElementById('product-container');
-    const products = Array.from(productContainer.getElementsByClassName('product-card'));
+    const products = Array.from(productContainer.getElementsByClassName('product-card'))
+        .filter(product => product.closest('.col-md-3').style.display !== 'none'); // Solo productos visibles
+
+    if (sortOrder === 'none') {
+        return;  // No ordenar si se selecciona "Ordenar por"
+    }
 
     products.sort((a, b) => {
         const priceA = parseFloat(a.getAttribute('data-price'));
@@ -97,8 +113,6 @@ function sortProductsByPrice() {
             return priceA - priceB;
         } else if (sortOrder === 'desc') {
             return priceB - priceA;
-        } else {
-            return 0;
         }
     });
 
