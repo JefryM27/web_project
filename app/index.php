@@ -1,3 +1,4 @@
+
 <?php
 session_start(); // Iniciar la sesión para manejar los mensajes
 
@@ -43,7 +44,7 @@ if (isset($_SESSION['error_message'])) {
 <body>
     <div class="container">
         <div class="container-form">
-            <form class="sign-in" action="/actions/users/authenticadLogin.php" method="POST">
+            <form class="sign-in" action="/app/actions/users/authenticadLogin.php" method="POST">
                 <h2>Iniciar Sesión</h2>
                 <span>Use su correo y contraseña</span>
                 <div class="container-input">

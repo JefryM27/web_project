@@ -1,3 +1,4 @@
+<?php include '../public/shared/header.html'; ?>
 <?php
 session_start();
 
@@ -39,27 +40,6 @@ foreach ($subcategorias as $categoria => $subs) {
     <link rel="stylesheet" href="../public/css/dashboardStyle.css">
 </head>
 <body>
-    <div class="header">
-        <div class="header-left">
-            <form method="post" action="">
-                <button type="submit" name="logout"><img src="../public/img/logout.png" alt="Logout"></button>
-            </form>
-            <h2><img src="../public/img/icon_cart.svg" alt="Mi Cuenta"> La Lico</h2>
-        </div>
-        <div class="header-center">
-            <input type="text" id="search-input" placeholder="¿Qué estás buscando?">
-            <button onclick="searchProducts()"><img src="../public/img/icon_search.png" alt="Buscar"></button>
-        </div>
-        <div class="header-right">
-            <a href="#"><img src="../public/img/icon_user.svg" alt="Mi Cuenta">Mi Cuenta</a>
-            <a href="#"><img src="../public/img/icon_box.svg" alt="Mis Pedidos">Mis Pedidos</a>
-            <div class="cart">
-                <a href="#"><img src="../public/img/icon_cart.svg" alt="Carrito">₡17.690</a>
-                <span>1</span>
-            </div>
-        </div>
-    </div>
-
     <div class="container mt-4">
         <div class="row">
             <!-- Sidebar de Filtros -->
@@ -95,7 +75,7 @@ foreach ($subcategorias as $categoria => $subs) {
 
             <!-- Sección de Productos -->
             <div class="col">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between mb-3">
                     <h4 id="product-count"><?php echo count($productos); ?> productos</h4>
                     <select id="sort-price" class="form-select w-auto" onchange="sortProductsByPrice()">
                         <option value="none">Ordenar por</option>
@@ -105,23 +85,25 @@ foreach ($subcategorias as $categoria => $subs) {
                 </div>
                 <div class="row" id="product-container">
                     <?php foreach ($productos as $producto): ?>
-                        <div class="col-md-3 justify-content-center">
-                            <div class="product-card" data-category="<?php echo $producto['category']; ?>"
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 product-card" data-category="<?php echo $producto['category']; ?>"
                                 data-subcategory="<?php echo $producto['sub_category']; ?>"
                                 data-name="<?php echo strtolower($producto['name']); ?>"
                                 data-price="<?php echo $producto['price']; ?>">
-                                <img src="<?php echo $producto['image_url']; ?>" class="product-img"
+                                <img src="<?php echo $producto['image_url']; ?>" class="card-img-top product-img"
                                     alt="<?php echo $producto['name']; ?>">
-                                <div class="add-button" onclick="toggleSpinner(this)">+ Agregar</div>
-                                <div class="spinner-container" style="display:none;">
-                                    <button class="btn btn-light btn-spinner" onclick="decrementCount(this)">-</button>
-                                    <span class="spinner-value">1</span>
-                                    <button class="btn btn-light btn-spinner" onclick="incrementCount(this)">+</button>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title product-title"><?php echo $producto['name']; ?></h5>
+                                    <p class="card-text product-price">₡<?php echo number_format($producto['price'], 2); ?></p>
+                                    <div class="mt-auto">
+                                        <button class="btn btn-primary add-button w-100" onclick="toggleSpinner(this)">+ Agregar</button>
+                                        <div class="spinner-container mt-2" style="display:none;">
+                                            <button class="btn btn-light btn-spinner">-</button>
+                                            <span class="spinner-value">1</span>
+                                            <button class="btn btn-light btn-spinner">+</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="product-price mt-4">₡<span class="product-price-value"
-                                        data-base-price="<?php echo number_format($producto['price'], 2); ?>"><?php echo number_format($producto['price'], 2); ?></span>
-                                </div>
-                                <div class="product-title mt-4"><?php echo $producto['name']; ?></div>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -130,6 +112,8 @@ foreach ($subcategorias as $categoria => $subs) {
         </div>
     </div>
     <script src="../public/js/dashboardScript.js"></script>
+    <?php include '../public/shared/footer.html'; ?>
+
 </body>
 
 </html>
