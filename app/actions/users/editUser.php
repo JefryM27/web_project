@@ -1,3 +1,4 @@
+<?php include '../../public/shared/headerEditUser.html'; ?>
 <?php
 session_start();
 
@@ -8,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Incluye el archivo de conexión a la base de datos
-require_once __DIR__ . '/../../utils/database.php';
+require_once '../../utils/database.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Perfil actualizado exitosamente.";
         $_SESSION['user_name'] = $new_name;
-        header("Location: profile.php"); // Redirigir a profile.php después de actualizar
+        header("Location:../../pages/profile.php"); // Redirigir a profile.php después de actualizar
         exit;
     } else {
         $_SESSION['error_message'] = "Error al actualizar el perfil.";
@@ -65,12 +66,11 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil</title>
-    <link rel="stylesheet" href="../public/css/profileStyle.css">
+    <link rel="stylesheet" href="../../public/css/profileStyle.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>Editar Perfil</h2>
 
     <!-- Mensajes de éxito/error -->
     <?php if (isset($_SESSION['success_message'])): ?>
@@ -88,22 +88,21 @@ $conn->close();
     <form action="editUser.php" method="POST">
         <div class="form-group">
             <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($name); ?>" required>
+            <input type="text" name="name" id="name" class="form-control" value="<?php echo htmlspecialchars($name); ?>" required>
         </div>
 
         <div class="form-group">
             <label for="email">Correo Electrónico</label>
-            <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
+            <input type="email" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
         </div>
 
         <div class="form-group">
             <label for="password">Contraseña (Opcional)</label>
-            <input type="password" name="password" id="password" placeholder="Nueva contraseña">
+            <input type="password" name="password" id="password" class="form-control" placeholder="Nueva contraseña">
         </div>
 
         <button type="submit" class="btn">Actualizar Perfil</button>
     </form>
 </div>
-
 </body>
 </html>
