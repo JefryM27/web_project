@@ -81,3 +81,39 @@ h2 {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+.container {
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    margin: 20px auto; /* Centrado automático */
+    text-align: center; /* Centra el contenido si es necesario */
+}
+
+.profile-info p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.profile-info p strong {
+    color: #333;
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}

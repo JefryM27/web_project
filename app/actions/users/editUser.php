@@ -21,7 +21,6 @@ $stmt->bind_result($name, $email);
 $stmt->fetch();
 $stmt->close();
 
-// Procesar la actualización del perfil
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_name = htmlspecialchars(trim($_POST['name']));
     $new_email = htmlspecialchars(trim($_POST['email']));
@@ -44,18 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt = $conn->prepare($update_sql);
     $stmt->bind_param($types, ...$params);
+
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Perfil actualizado exitosamente.";
         $_SESSION['user_name'] = $new_name;
-        header("Location: profile.php");
+        header("Location: profile.php"); // Redirigir a profile.php después de actualizar
         exit;
     } else {
         $_SESSION['error_message'] = "Error al actualizar el perfil.";
     }
-    $stmt->close();
 
-    header("Location: edit.php");
-    exit;
+    $stmt->close();
 }
 
 $conn->close();
@@ -87,7 +85,7 @@ $conn->close();
         </div>
     <?php endif; ?>
 
-    <form action="edit.php" method="POST">
+    <form action="editUser.php" method="POST">
         <div class="form-group">
             <label for="name">Nombre</label>
             <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($name); ?>" required>

@@ -20,7 +20,6 @@ function get_mysql_connection(){
 
 // Prueba de la conexión
 $conexion = get_mysql_connection();
-if ($conexion) {
-    echo "Conexión exitosa a la base de datos.";
-}
+// Eliminar o comentar esta línea para evitar que se muestre el mensaje
+// echo "Conexión exitosa a la base de datos.";
 ?>
