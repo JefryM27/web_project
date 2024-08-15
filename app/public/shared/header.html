@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../public/css/header.css">
 <div class="header">
     <div class="header-left">
-        <form method="post" action="">
+        <form action="../../utils/logout.php" method="post">
             <button type="submit" name="logout" class="logout-button">
                 Cerrar Sesión
             </button>
@@ -25,10 +25,10 @@
             <img src="../public/img/box.jpg" alt="Mis Pedidos" class="header-icon">Mis Pedidos
         </a>
         <div class="cart">
-            <a href="#" class="header-link">
-                <img src="../public/img/cart.png" alt="Carrito" class="header-icon">₡17.690
+            <a class="header-link" id="cart-icon">
+                <img src="../public/img/cart.png" alt="Carrito" class="header-icon">₡<h5 id="cart-total-header">0.00</h5>
             </a>
-            <span class="cart-badge">1</span>
+            <span class="cart-badge text-white" id="cart-count">0</span>
         </div>
     </div>
 </div>

@@ -112,3 +112,79 @@ button[name="logout"] {
 button[name="logout"]:hover {
     background-color: red;
 }
+
+.cart-item {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.cart-item-img {
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 10px;
+}
+
+.cart-item-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-spinner {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-right: 20px;
+}
+
+.cart-item-delete {
+    background-color: #ff4d4f;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.cart-item-delete:hover {
+    background-color: #e43e3e;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.btn-spinner {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+#cart-items {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#cart-total-modal {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.spinner-value {
+    width: 30px;
+    text-align: center;
+}

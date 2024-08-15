@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validaciones
     if (empty($email) || empty($password)) {
         $_SESSION['error_message'] = "Todos los campos son obligatorios.";
-        header("Location: /index.php");
+        header("Location: ../../index.php");
         exit;
     }
 
@@ -37,16 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Iniciar sesión
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['user_name'] = $user_name;
-                header("Location: /app/pages/dashboard.php");
+                header("Location: ../../pages/dashboard.php");
                 exit;
             } else {
                 $_SESSION['error_message'] = "Contraseña incorrecta.";
-                header("Location: /app/index.php");
+                header("Location: ../../index.php");
                 exit;
             }
         } else {
             $_SESSION['error_message'] = "No existe una cuenta con ese correo electrónico.";
-            header("Location: /app/index.php");
+            header("Location: ../../index.php");
             exit;
         }
         
@@ -54,14 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     } else {
         $_SESSION['error_message'] = "Error en la preparación de la consulta.";
-        header("Location: /app/index.php");
+        header("Location: ../../index.php");
         exit;
     }
 
     // Cerrar la conexión
     $conn->close();
 } else {
-    header("Location: /app/index.php");
+    header("Location: ../../index.php");
     exit;
 }
 ?>

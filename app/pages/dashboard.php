@@ -1,14 +1,6 @@
 <?php include '../public/shared/header.html'; ?>
 <?php
 session_start();
-
-// Verificar si se ha enviado la solicitud de cierre de sesión
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header("Location: ../index.php");
-    exit();
-}
-
 // Leer el archivo JSON
 $productos = json_decode(file_get_contents('../utils/productos.json'), true);
 
@@ -39,6 +31,7 @@ foreach ($subcategorias as $categoria => $subs) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/dashboardStyle.css">
 </head>
+
 <body>
     <div class="container mt-4">
         <div class="row">
@@ -108,7 +101,37 @@ foreach ($subcategorias as $categoria => $subs) {
                 </div>
             </div>
         </div>
-    </div>
+    </div>
+
+    <!-- Modal del Carrito -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Mi carrito</h5>
+                    <button type="button" class="btn-close" id="close-cart" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cart-items" class="cart-items-container"></div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <h5>Subtotal</h5>
+                        <h5>₡<span id="cart-total-modal">0.00</span></h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form id="cart-form" action="process_payment.php" method="post">
+                        <input type="hidden" name="cart_data" id="cart-data">
+                        <button type="submit" class="btn btn-success" id="confirm-purchase">Continuar con la
+                            compra</button>
+                    </form>
+                    <button type="button" class="btn btn-danger" id="clear-cart">Vaciar carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="../public/js/dashboardScript.js"></script>
     <?php include '../public/shared/footer.html'; ?>
 
