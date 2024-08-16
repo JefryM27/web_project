@@ -1,15 +1,16 @@
-<?php include '../public/shared/header.php'; ?>
 <?php
+include '../utils/database.php';
+include '../public/shared/header.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-include '../utils/database.php'; // Incluye la conexión a la base de datos
-
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
     exit();
 }
+
 $conn = get_mysql_connection();
 $user_id = $_SESSION['user_id'];
 
@@ -22,17 +23,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cart_data'])) {
     $cart = [];
 }
 
-// Función para calcular el total
-function calcularTotal($cart)
+// Función para calcular el subtotal
+function calcularSubtotal($cart)
 {
-    $total = 0;
+    $subtotal = 0;
     foreach ($cart as $item) {
-        $total += $item['price'] * $item['quantity'];
+        $subtotal += $item['price'] * $item['quantity'];
     }
-    return $total;
+    return $subtotal;
 }
 
-$totalColones = calcularTotal($cart);
+$subtotalColones = calcularSubtotal($cart);
+$tasaIva = 0.13;  // Tasa de IVA en Costa Rica
+$iva = $subtotalColones * $tasaIva;
+$costoEnvio = rand(900, 1900); // Costo de envío aleatorio
+
+$totalColones = $subtotalColones + $iva + $costoEnvio;
 $tasaCambio = 0.0019;  // Tasa de cambio de colones a dólares
 $totalDolares = $totalColones * $tasaCambio;
 
@@ -124,7 +130,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
                 <div class="card">
                     <div class="card-body">
                         <h4>Total a Pagar</h4>
-                        <p>Subtotal: ₡<?php echo number_format($totalColones, 2); ?></p>
+                        <p>Subtotal: ₡<?php echo number_format($subtotalColones, 2); ?></p>
+                        <p>IVA: ₡<?php echo number_format($iva, 2); ?></p>
+                        <p>Costo de Envío: ₡<?php echo number_format($costoEnvio, 2); ?></p>
+                        <p>Total: ₡<?php echo number_format($totalColones, 2); ?></p>
                         <p>Total en dólares: $<?php echo number_format($totalDolares, 2); ?></p>
                         <a class="confirm-button" id="paypal-button"></a>
                     </div>

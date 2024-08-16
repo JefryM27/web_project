@@ -1,14 +1,15 @@
-<?php include '../public/shared/headerProfile.html'; ?>
-<?php
-session_start();
+<?php 
+include '../utils/database.php';
+include '../public/shared/headerProfile.html';
 
-// Verifica si el usuario está logueado
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../index.php");
-    exit;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-
-require_once '../utils/database.php';
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
+    exit();
+}
 
 $user_id = $_SESSION['user_id'];
 

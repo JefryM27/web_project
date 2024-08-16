@@ -1,8 +1,9 @@
 <?php
-session_start(); // Iniciar la sesión para usar variables de sesión
+include '../../utils/database.php';
 
-// Incluye el archivo de conexión a la base de datos
-require_once __DIR__ . '/../../utils/database.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Función para sanitizar entradas del usuario
 function sanitizeInput($data) {

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <link rel="stylesheet" href="../public/css/header.css">
 <div class="header">
     <div class="header-left">

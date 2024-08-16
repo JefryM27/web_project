@@ -1,3 +1,15 @@
+<?php 
+include '../utils/database.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

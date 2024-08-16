@@ -1,4 +1,3 @@
-
 <?php
 session_start(); // Iniciar la sesión para manejar los mensajes
 
@@ -16,6 +15,7 @@ if (isset($_SESSION['error_message'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,10 +24,25 @@ if (isset($_SESSION['error_message'])) {
     <style>
         .alert {
             padding: 15px;
-            margin: 20px 0;
+            margin: 20px auto;
             border-radius: 5px;
             font-size: 16px;
             text-align: center;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%); /* esto ajusta la alerta para que este completamente centrada */
+            z-index: 1000;
+            max-width: 500px;
+            animation: fadeInOut 5s forwards;
+        }
+
+        /* Animación para desvanecer el mensaje */
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         .alert-success {
@@ -41,6 +56,7 @@ if (isset($_SESSION['error_message'])) {
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="container-form">
@@ -100,4 +116,5 @@ if (isset($_SESSION['error_message'])) {
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </body>
+
 </html>

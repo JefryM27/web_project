@@ -1,6 +1,9 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../utils/database.php';
+include '../../utils/database.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Sanitizar entradas del usuario
 function sanitizeInput($data) {

@@ -1,5 +1,6 @@
-<?php include '../public/shared/header.php'; ?>
-<?php
+<?php 
+include '../public/shared/header.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,6 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
     exit();
 }
+
 // Leer el archivo JSON
 $productos = json_decode(file_get_contents('../utils/productos.json'), true);
 

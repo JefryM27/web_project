@@ -1,12 +1,16 @@
 <?php
-session_start();
 include '../utils/database.php';
+include '../public/shared/header.php';
 
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../index.php');
-    exit;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
+    exit();
+}
+
 $conn = get_mysql_connection();
 $user_id = $_SESSION['user_id'];
 
