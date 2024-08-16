@@ -16,26 +16,8 @@ CREATE TABLE products (
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     category VARCHAR (25),
-    image_url VARCHAR(25)
-);
-
--- Tabla de Carrito de Compras
-CREATE TABLE cart (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    user_id INTEGER,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
--- Tabla de Elementos del Carrito
-CREATE TABLE cart_items (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    cart_id INTEGER,
-    product_id INTEGER,
-    quantity INTEGER NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    sub_category VARCHAR(25),
+    image_url VARCHAR(255)
 );
 
 -- Tabla de Pedidos

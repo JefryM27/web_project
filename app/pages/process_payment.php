@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
         unset($_SESSION['cart']);
         session_write_close();
 
-        echo "<script>alert('Compra completada exitosamente.'); window.location.href = 'dashboard.php';</script>";
+        echo "<script>alert('Compra completada exitosamente.'); window.location.href = 'bill.php';</script>";
 
     } catch (Exception $e) {
         $conn->rollback();
