@@ -1,6 +1,17 @@
-<?php include '../public/shared/header.html'; ?>
+<?php include '../public/shared/header.php'; ?>
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include '../utils/database.php'; // Incluye la conexión a la base de datos
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
+    exit();
+}
+$conn = get_mysql_connection();
+$user_id = $_SESSION['user_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cart_data'])) {
     $cart = json_decode($_POST['cart_data'], true);
@@ -10,8 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cart_data'])) {
 } else {
     $cart = [];
 }
+
 // Función para calcular el total
-function calcularTotal($cart) {
+function calcularTotal($cart)
+{
     $total = 0;
     foreach ($cart as $item) {
         $total += $item['price'] * $item['quantity'];
@@ -22,8 +35,45 @@ function calcularTotal($cart) {
 $totalColones = calcularTotal($cart);
 $tasaCambio = 0.0019;  // Tasa de cambio de colones a dólares
 $totalDolares = $totalColones * $tasaCambio;
-?>
 
+// Procesar el pago con PayPal y luego guardar el pedido en la base de datos
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'complete') {
+    $conn->begin_transaction();
+
+    try {
+        // Insertar la orden en la tabla `orders`
+        $stmt = $conn->prepare("INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, ?)");
+        $status = 'Pendiente'; // o 'Completado' según el flujo de tu aplicación
+        $stmt->bind_param('ids', $user_id, $totalColones, $status);
+        $stmt->execute();
+        $order_id = $stmt->insert_id;
+        $stmt->close();
+
+        // Insertar los productos en la tabla order_items
+        foreach ($cart as $item) {
+            $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param('iiid', $order_id, $item['id'], $item['quantity'], $item['price']);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        $conn->commit();
+
+        // Limpiar el carrito después de completar la compra
+        unset($_SESSION['cart']);
+        session_write_close();
+
+        echo "<script>alert('Compra completada exitosamente.'); window.location.href = 'dashboard.php';</script>";
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo "<script>alert('Error al procesar la compra. Por favor, intenta nuevamente.'); window.location.href = 'process_payment.php';</script>";
+    }
+
+    $conn->close();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -34,6 +84,7 @@ $totalDolares = $totalColones * $tasaCambio;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/dashboardStyle.css">
 </head>
+
 <body>
     <div class="container mt-4">
         <h1>Resumen</h1>
@@ -52,7 +103,8 @@ $totalDolares = $totalColones * $tasaCambio;
                         <?php foreach ($cart as $productId => $item): ?>
                             <tr>
                                 <td>
-                                    <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" style="max-width: 50px; max-height: 50px;">
+                                    <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>"
+                                        style="max-width: 50px; max-height: 50px;">
                                     <?php echo $item['name']; ?>
                                 </td>
                                 <td>₡<?php echo number_format($item['price'], 2); ?></td>
@@ -81,12 +133,13 @@ $totalDolares = $totalColones * $tasaCambio;
         </div>
     </div>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=AaYQaAg6giHjDJitK2rnfQm66cm-ZjIouC2BXMPdxvzs_zb4jLfc2bnxwqm1R5g4w-6au0-CfvnaHEo_&currency=USD"></script>
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AaYQaAg6giHjDJitK2rnfQm66cm-ZjIouC2BXMPdxvzs_zb4jLfc2bnxwqm1R5g4w-6au0-CfvnaHEo_&currency=USD"></script>
     <script src="../public/js/dashboardScript.js"></script>
     <script>
         // PayPal
         paypal.Buttons({
-            createOrder: function(data, actions) {
+            createOrder: function (data, actions) {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
@@ -95,10 +148,12 @@ $totalDolares = $totalColones * $tasaCambio;
                     }]
                 });
             },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
                     alert('Compra completada por ' + details.payer.name.given_name);
-                    // una página de confirmación
+
+                    // Aquí podrías redirigir a un script que procese la compra
+                    window.location.href = 'process_payment.php?action=complete';
                 });
             }
         }).render('#paypal-button');

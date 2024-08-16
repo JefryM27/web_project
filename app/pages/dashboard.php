@@ -1,6 +1,13 @@
-<?php include '../public/shared/header.html'; ?>
+<?php include '../public/shared/header.php'; ?>
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
+    exit();
+}
 // Leer el archivo JSON
 $productos = json_decode(file_get_contents('../utils/productos.json'), true);
 
@@ -70,16 +77,12 @@ foreach ($subcategorias as $categoria => $subs) {
             <div class="col">
                 <div class="d-flex align-items-center justify-content-between">
                     <h4 id="product-count"><?php echo count($productos); ?> productos</h4>
-                    <select id="sort-price" class="form-select w-auto" onchange="sortProductsByPrice()">
-                        <option value="none">Ordenar por</option>
-                        <option value="asc">Precio: Menor a Mayor</option>
-                        <option value="desc">Precio: Mayor a Menor</option>
-                    </select>
                 </div>
                 <div class="row" id="product-container">
                     <?php foreach ($productos as $producto): ?>
                         <div class="col-md-3 justify-content-center">
-                            <div class="product-card" data-category="<?php echo $producto['category']; ?>"
+                            <div class="product-card" data-id="<?php echo $producto['id']; ?>"
+                                data-category="<?php echo $producto['category']; ?>"
                                 data-subcategory="<?php echo $producto['sub_category']; ?>"
                                 data-name="<?php echo strtolower($producto['name']); ?>"
                                 data-price="<?php echo $producto['price']; ?>">

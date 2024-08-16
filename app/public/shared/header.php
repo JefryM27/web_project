@@ -1,7 +1,10 @@
+<?php
+session_start();
+?>
 <link rel="stylesheet" href="../public/css/header.css">
 <div class="header">
     <div class="header-left">
-        <form action="../../utils/logout.php" method="post">
+        <form action="../utils/logout.php" method="post">
             <button type="submit" name="logout" class="logout-button">
                 Cerrar Sesión
             </button>
@@ -21,12 +24,13 @@
         <a href="../pages/profile.php" class="header-link">
             <img src="../public/img/user.jpg" alt="Mi Cuenta" class="header-icon">Mi Cuenta
         </a>
-        <a href="#" class="header-link">
+        <a href="../pages/orders.php" class="header-link">
             <img src="../public/img/box.jpg" alt="Mis Pedidos" class="header-icon">Mis Pedidos
         </a>
         <div class="cart">
             <a class="header-link" id="cart-icon">
-                <img src="../public/img/cart.png" alt="Carrito" class="header-icon">₡<h5 id="cart-total-header">0.00</h5>
+                <img src="../public/img/cart.png" alt="Carrito" class="header-icon">₡<h5 id="cart-total-header">0.00
+                </h5>
             </a>
             <span class="cart-badge text-white" id="cart-count">0</span>
         </div>
