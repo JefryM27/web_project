@@ -70,6 +70,9 @@ $conn->close();
                             <td>
                                 <a href="order_details.php?order_id=<?php echo $order['id']; ?>" class="btn btn-info btn-sm">Ver
                                     Detalles</a>
+
+                                <a href="bill.php?order_id=<?php echo $order['id']; ?>" class="btn btn-secondary btn-sm">Ver
+                                    Factura</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -78,7 +81,7 @@ $conn->close();
         <?php else: ?>
             <p>No tienes pedidos realizados.</p>
         <?php endif; ?>
-        <a href="dashboard.php" class="btn btn-secondary">Volver al dashboard</a>
+        <a href="dashboard.php" class="btn btn-danger">Volver al dashboard</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

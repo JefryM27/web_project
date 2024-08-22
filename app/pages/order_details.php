@@ -35,7 +35,7 @@ $order_result = $stmt_order->get_result();
 $order = $order_result->fetch_assoc();
 
 if (!$order) {
-    header('Location: my_orders.php');
+    header('Location: orders.php');
     exit;
 }
 
