@@ -91,7 +91,7 @@ $conn->close();
                                 </td>
                                 <td>
                                     <a href="order_details.php?order_id=<?php echo $order['id']; ?>"
-                                        class="btn btn-info btn-sm">Ver Detalles</a>
+                                        class="btn btn-secondary btn-sm">Ver Detalles</a>
                                     <a href="bill.php?order_id=<?php echo $order['id']; ?>" class="btn btn-secondary btn-sm">Ver
                                         Factura</a>
                                 </td>
@@ -104,10 +104,11 @@ $conn->close();
             <p class="no-orders">No hay pedidos disponibles.</p>
         <?php endif; ?>
         <div class="d-flex justify-content-end mt-4">
-            <a href="<?php echo $user_id == 1 ? 'generate_report.php' : 'dashboard.php'; ?>" class="btn btn-danger">
-                <?php echo $user_id == 1 ? 'Generar Reportes de Ventas' : 'Volver al dashboard'; ?>
-            </a>
-        </div>
+    <a href="<?php echo $user_id == 1 ? 'generate_report.php' : 'dashboard.php'; ?>" class="btn custom-dashboard-btn">
+        <?php echo $user_id == 1 ? 'Generar Reportes de Ventas' : 'Volver al dashboard'; ?>
+    </a>
+</div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

@@ -111,6 +111,7 @@ button[name="logout"] {
 
 button[name="logout"]:hover {
     background-color: red;
+    color: #000000;
 }
 
 .cart-item {
@@ -141,17 +142,18 @@ button[name="logout"]:hover {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
+    color: #000000;
 }
 
 .cart-item-price {
     font-size: 1rem;
     font-weight: bold;
-    color: #333;
+    color: #000000;
     margin-right: 20px;
 }
 
 .cart-item-delete {
-    background-color: #ff4d4f;
+    background-color: #000000;
     border: none;
     color: white;
     padding: 6px 10px;
@@ -161,7 +163,7 @@ button[name="logout"]:hover {
 }
 
 .cart-item-delete:hover {
-    background-color: #e43e3e;
+    background-color: #00FF00;
 }
 
 .cart-item-quantity {
@@ -188,3 +190,36 @@ button[name="logout"]:hover {
     width: 30px;
     text-align: center;
 }
+
+/* Estilos personalizados para el botón de "Continuar con la compra" */
+.custom-confirm-btn {
+    background-color: #000000; /* Verde clásico */
+    border: none; /* Elimina el borde */
+    color: #fff; /* Texto en blanco */
+    padding: 12px 24px; /* Aumenta el padding para un botón más grande */
+    font-size: 16px; /* Tamaño de la fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+.custom-confirm-btn:hover {
+    background-color: #00FF00; /* Verde más oscuro en hover */
+    color: #000000;
+}
+
+/* Estilos personalizados para el botón de "Vaciar carrito" */
+.custom-clear-btn {
+    background-color: #000000; /* Rojo clásico */
+    border: none; /* Elimina el borde */
+    color: #fff; /* Texto en blanco */
+    padding: 12px 24px; /* Aumenta el padding para un botón más grande */
+    font-size: 16px; /* Tamaño de la fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+.custom-clear-btn:hover {
+    background-color: #00FF00; /* Rojo más oscuro en hover */
+    color: #000000;
+}
+

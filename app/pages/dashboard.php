@@ -126,10 +126,10 @@ foreach ($subcategorias as $categoria => $subs) {
                 <div class="modal-footer">
                     <form id="cart-form" action="process_payment.php" method="post">
                         <input type="hidden" name="cart_data" id="cart-data">
-                        <button type="submit" class="btn btn-success" id="confirm-purchase">Continuar con la
+                        <button type="submit" class="custom-confirm-btn" id="confirm-purchase">Continuar con la
                             compra</button>
                     </form>
-                    <button type="button" class="btn btn-danger" id="clear-cart">Vaciar carrito</button>
+                    <button type="button" class="custom-clear-btn" id="clear-cart">Vaciar carrito</button>
                 </div>
             </div>
         </div>

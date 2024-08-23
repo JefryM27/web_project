@@ -64,3 +64,17 @@ body {
     color: #6c757d;
     text-align: center;
 }
+
+.btn-dashboard {
+    background-color: #343a40; 
+    border: none; 
+    color: #fff;
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 10px; 
+}
+
+.btn-dashboard:hover {
+    background-color: #00FF00; 
+}
+

@@ -146,9 +146,13 @@ if (isset($_GET['order_id'])) {
         </div>
     </div>
 
+    <!-- Botón para regresar al dashboard -->
+    <div class="d-flex justify-content-end mt-4">
+        <a href="dashboard.php" class="btn btn-dashboard">Volver al Dashboard</a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
-

@@ -5,8 +5,18 @@ body {
 }
 
 h1 {
-    color: #000;
-    margin-bottom: 20px;
+    color: #000; 
+    text-align: center; 
+}
+
+.order-details {
+    text-align: center; /* Centra el texto horizontalmente */
+    margin: 0 auto; /* Asegura que el contenedor esté centrado si tiene un ancho fijo */
+    max-width: 300px; /* Opcional: define un ancho máximo para el contenedor */
+}
+
+.order-details p {
+    margin-bottom: 10px; /* Añade un margen inferior entre los párrafos */
 }
 
 .table-responsive {
@@ -67,12 +77,12 @@ h1 {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #858e85;
     border: none;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: #00FF00;
 }
 
 .no-items {
@@ -94,14 +104,16 @@ h1 {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #000000;
+    color: #ffffff;
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: #00FF00;
+    color: #000;
 }
 
 .confirm-button {
@@ -121,4 +133,20 @@ h1 {
 
 .paypal-button-container {
     margin-top: 20px;
+}
+
+.custom-dashboard-btn {
+    background-color: #000000; 
+    color: #ffffff; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 16px; 
+}
+
+.custom-dashboard-btn:hover {
+    background-color: #00FF00; 
+    color: #000000;
 }
