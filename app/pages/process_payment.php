@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     try {
         // Insertar la orden en la tabla `orders`
         $stmt = $conn->prepare("INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, ?)");
-        $status = 'Pendiente'; // o 'Completado' según el flujo de tu aplicación
+        $status = 'Completado';
         $stmt->bind_param('ids', $user_id, $totalColones, $status);
         $stmt->execute();
         $order_id = $stmt->insert_id;
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
         unset($_SESSION['cart']);
         session_write_close();
 
-        echo "<script>alert('Compra completada exitosamente.'); window.location.href = 'bill.php';</script>";
+        echo "<script>alert('Compra completada exitosamente.'); window.location.href = 'bill.php?order_id=$order_id';</script>";
 
     } catch (Exception $e) {
         $conn->rollback();
@@ -78,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
 
     $conn->close();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -88,42 +87,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagar Compra</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/dashboardStyle.css">
+    <link href="../public/css/ordersStyle.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container mt-4">
+    <div class="container">
         <h1>Resumen</h1>
         <div class="row">
             <div class="col-md-8">
-                <table class="table table-responsive table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($cart as $productId => $item): ?>
+                <div class="table-responsive mt-4" style="max-height: 374px; overflow-y: auto;">
+                    <table class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td>
-                                    <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>"
-                                        style="max-width: 50px; max-height: 50px;">
-                                    <?php echo $item['name']; ?>
-                                </td>
-                                <td>₡<?php echo number_format($item['price'], 2); ?></td>
-                                <td>
-                                    <div class="align-items-center">
-                                        <span class="mx-2"><?php echo $item['quantity']; ?></span>
-                                    </div>
-                                </td>
-                                <td>₡<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($cart as $productId => $item): ?>
+                                <tr>
+                                    <td class="d-flex align-items-center">
+                                        <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>"
+                                            style="max-width: 50px; max-height: 50px;" class="me-3">
+                                        <?php echo $item['name']; ?>
+                                    </td>
+                                    <td>₡<?php echo number_format($item['price'], 2); ?></td>
+                                    <td><?php echo $item['quantity']; ?></td>
+                                    <td>₡<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="col-md-4">
@@ -135,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
                         <p>Costo de Envío: ₡<?php echo number_format($costoEnvio, 2); ?></p>
                         <p>Total: ₡<?php echo number_format($totalColones, 2); ?></p>
                         <p>Total en dólares: $<?php echo number_format($totalDolares, 2); ?></p>
-                        <a class="confirm-button" id="paypal-button"></a>
+                        <div class="paypal-button-container" id="paypal-button"></div>
                     </div>
                 </div>
             </div>
@@ -160,8 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
                     alert('Compra completada por ' + details.payer.name.given_name);
-
-                    // Aquí podrías redirigir a un script que procese la compra
                     window.location.href = 'process_payment.php?action=complete';
                 });
             }

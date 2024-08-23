@@ -6,7 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Sanitizar entradas del usuario
-function sanitizeInput($data) {
+function sanitizeInput($data)
+{
     return htmlspecialchars(stripslashes(trim($data)));
 }
 
@@ -40,7 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Iniciar sesión
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['user_name'] = $user_name;
-                header("Location: ../../pages/dashboard.php");
+
+                if ($user_id == 1) {
+                    header("Location: ../../pages/orders.php");
+                } else {
+                    header("Location: ../../pages/dashboard.php");
+                }
                 exit;
             } else {
                 $_SESSION['error_message'] = "Contraseña incorrecta.";
@@ -52,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../../index.php");
             exit;
         }
-        
+
         // Cerrar la declaración
         $stmt->close();
     } else {

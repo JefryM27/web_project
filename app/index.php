@@ -31,7 +31,7 @@ if (isset($_SESSION['error_message'])) {
             position: fixed;
             top: 20px;
             left: 50%;
-            transform: translateX(-50%); /* esto ajusta la alerta para que este completamente centrada */
+            transform: translateX(-50%);
             z-index: 1000;
             max-width: 500px;
             animation: fadeInOut 5s forwards;
@@ -77,20 +77,20 @@ if (isset($_SESSION['error_message'])) {
         </div>
 
         <div class="container-form">
-            <form class="sign-up" action="actions/users/addUser.php" method="POST">
+            <form id="registerForm" class="sign-up" action="actions/users/addUser.php" method="POST">
                 <h2>Registrarse</h2>
                 <span>Use su correo electrónico para registrarse</span>
                 <div class="container-input">
                     <ion-icon name="person-outline"></ion-icon>
-                    <input type="text" name="name" placeholder="Nombre" required>
+                    <input type="text" name="name" id="name" placeholder="Nombre" required>
                 </div>
                 <div class="container-input">
                     <ion-icon name="mail-outline"></ion-icon>
-                    <input type="text" name="email" placeholder="Email" required>
+                    <input type="text" name="email" id="email" placeholder="Email" required>
                 </div>
                 <div class="container-input">
                     <ion-icon name="lock-closed-outline"></ion-icon>
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
                 </div>
                 <button class="button" type="submit">REGISTRARSE</button>
             </form>
@@ -114,6 +114,38 @@ if (isset($_SESSION['error_message'])) {
     <script src="public/js/loginScript.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- Validaciones en JavaScript -->
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            let validForm = true;
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Validar el nombre (solo letras y espacios)
+            if (!name.match(/^[a-zA-Z\s]+$/)) {
+                alert("El nombre debe contener solo letras y espacios.");
+                validForm = false;
+            }
+
+            // Validar el formato del correo electrónico
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                alert("El correo electrónico no es válido.");
+                validForm = false;
+            }
+
+            // Validar la longitud de la contraseña
+            if (password.length < 8) {
+                alert("La contraseña debe tener al menos 8 caracteres.");
+                validForm = false;
+            }
+
+            if (!validForm) {
+                event.preventDefault(); // Detener el envío del formulario si no es válido
+            }
+        });
+    </script>
 
 </body>
 

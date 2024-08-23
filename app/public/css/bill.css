@@ -1,82 +1,66 @@
 body {
+    background-color: #f8f9fa;
+    color: #333;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
 }
 
 .invoice-container {
-    width: 80%;
-    margin: 50px auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.invoice-header {
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
 }
 
-.header .invoice-id {
-    font-size: 24px;
+.invoice-header h1 {
+    font-size: 28px;
     font-weight: bold;
-}
-
-.header .logo {
-    height: 100px;
-    width: auto;
-}
-
-.header .invoice-number {
-    font-size: 18px;
-    text-align: right;
-}
-
-.customer-info {
-    margin-bottom: 20px;
-}
-
-.customer-info p {
     margin: 0;
-    padding: 5px 0;
 }
 
-.invoice-date {
-    text-align: right;
-    margin-bottom: 20px;
-    font-weight: bold;
+.invoice-header img {
+    max-height: 60px;
 }
 
-.product-details {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+.invoice-details p {
+    margin: 0;
+    line-height: 1.6;
 }
 
-.product-details th, .product-details td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-.product-details th {
-    background-color: #f0f0f0;
-}
-
-.total {
-    text-align: right;
+.table {
+    color: #333;
     margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
+}
+
+.table th, .table td {
+    padding: 12px;
+    vertical-align: middle;
+    border-color: #dee2e6;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.table tfoot th {
+    text-align: right;
+}
+
+.total-row th {
+    background-color: #343a40;
+    color: #fff;
 }
 
 .footer {
-    text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
     font-size: 14px;
-    color: #777;
+    color: #6c757d;
+    text-align: center;
 }

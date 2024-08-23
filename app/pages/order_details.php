@@ -25,11 +25,25 @@ $order_id = $_GET['order_id'];
 $query_order = "
     SELECT o.id, o.order_date, o.total_amount, o.status
     FROM orders o
-    WHERE o.id = ? AND o.user_id = ?
-";
+    WHERE o.id = ? ";
 
+// Añadir condición extra si el usuario no es administrador (user_id != 1)
+if ($user_id != 1) {
+    $query_order .= " AND o.user_id = ?";
+}
+
+// Preparar la consulta
 $stmt_order = $conn->prepare($query_order);
-$stmt_order->bind_param("ii", $order_id, $user_id);
+
+// Verificar si el usuario es admin
+if ($user_id == 1) {
+    // Si es admin, sólo se usa el order_id
+    $stmt_order->bind_param("i", $order_id);
+} else {
+    // Si no es admin, se usa tanto order_id como user_id
+    $stmt_order->bind_param("ii", $order_id, $user_id);
+}
+
 $stmt_order->execute();
 $order_result = $stmt_order->get_result();
 $order = $order_result->fetch_assoc();
@@ -44,8 +58,7 @@ $query_items = "
     SELECT p.name, oi.quantity, oi.price, p.image_url
     FROM order_items oi
     JOIN products p ON oi.product_id = p.id
-    WHERE oi.order_id = ?
-";
+    WHERE oi.order_id = ?";
 
 $stmt_items = $conn->prepare($query_items);
 $stmt_items->bind_param("i", $order_id);
@@ -70,45 +83,52 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Pedido</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/css/ordersStyle.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container mt-4">
-        <h1>Detalles del Pedido #<?php echo $order['id']; ?></h1>
-        <p>Fecha: <?php echo $order['order_date']; ?></p>
-        <p>Total: ₡<?php echo number_format($order['total_amount'], 2); ?></p>
-        <p>Estado: <?php echo $order['status']; ?></p>
+    <div class="container">
+        <h1 class="mb-4">Detalles del Pedido #<?php echo $order['id']; ?></h1>
+        <div class="mb-3">
+            <p><strong>Fecha:</strong> <?php echo date('d/m/Y', strtotime($order['order_date'])); ?></p>
+            <p><strong>Total:</strong> ₡<?php echo number_format($order['total_amount'], 2); ?></p>
+            <p><strong>Estado:</strong> <?php echo $order['status']; ?></p>
+        </div>
         <hr>
-        <h4>Productos:</h4>
+        <h4 class="mb-3">Productos:</h4>
         <?php if (count($order_items) > 0): ?>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio Unitario</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($order_items as $item): ?>
+            <div class="table-responsive" style="max-height: 374px; overflow-y: auto;">
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>
-                                <img src="<?php echo $item['image_url']; ?>" alt="<?php echo $item['name']; ?>"
-                                    style="max-width: 50px; max-height: 50px;">
-                                <?php echo $item['name']; ?>
-                            </td>
-                            <td><?php echo $item['quantity']; ?></td>
-                            <td>₡<?php echo number_format($item['price'], 2); ?></td>
-                            <td>₡<?php echo number_format($item['quantity'] * $item['price'], 2); ?></td>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($order_items as $item): ?>
+                            <tr>
+                                <td class="d-flex align-items-center">
+                                    <img src="<?php echo $item['image_url']; ?>" alt="<?php echo $item['name']; ?>" class="me-3"
+                                        style="width: 50px; height: 50px;">
+                                    <?php echo $item['name']; ?>
+                                </td>
+                                <td><?php echo $item['quantity']; ?></td>
+                                <td>₡<?php echo number_format($item['price'], 2); ?></td>
+                                <td>₡<?php echo number_format($item['quantity'] * $item['price'], 2); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php else: ?>
-            <p>No se encontraron productos en este pedido.</p>
+            <p class="no-items">No se encontraron productos en este pedido.</p>
         <?php endif; ?>
-        <a href="orders.php" class="btn btn-secondary">Volver a Mis Pedidos</a>
+        <div class="d-flex justify-content-end mt-4">
+            <a href="orders.php" class="btn btn-secondary mb-4">Volver a Mis Pedidos</a>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
