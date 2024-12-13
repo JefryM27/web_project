@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != 1) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit();
 }
 

@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../index.php"); // Redirigir al inicio de sesión si no está autenticado
+    header("Location: ../../index.php"); // Redirigir al inicio de sesión si no está autenticado
     exit();
 }
 

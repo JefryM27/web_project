@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Redirigir de vuelta a index.php para mostrar el mensaje
-    header("Location:  ../../index.php");
+    header("Location:  ../../../index.php");
     exit;
 }
 ?>

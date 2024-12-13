@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 // Verificar si el usuario ha iniciado sesión y es administrador
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != 1) {
-    header("Location: ../index.php"); // Redirigir al inicio de sesión si no es administrador
+    header("Location: ../../index.php"); // Redirigir al inicio de sesión si no es administrador
     exit();
 }
 ?>

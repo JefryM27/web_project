@@ -20,7 +20,7 @@ if (isset($_SESSION['error_message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio de Sesión</title>
-    <link rel="stylesheet" href="public/css/loginStyle.css">
+    <link rel="stylesheet" href="app/public/css/loginStyle.css">
     <style>
         .alert {
             padding: 15px;
@@ -60,7 +60,7 @@ if (isset($_SESSION['error_message'])) {
 <body>
     <div class="container">
         <div class="container-form">
-            <form class="sign-in" action="actions/users/authenticadLogin.php" method="POST">
+            <form class="sign-in" action="app/actions/users/authenticadLogin.php" method="POST">
                 <h2>Iniciar Sesión</h2>
                 <span>Use su correo y contraseña</span>
                 <div class="container-input">
@@ -77,7 +77,7 @@ if (isset($_SESSION['error_message'])) {
         </div>
 
         <div class="container-form">
-            <form id="registerForm" class="sign-up" action="actions/users/addUser.php" method="POST">
+            <form id="registerForm" class="sign-up" action="app/actions/users/addUser.php" method="POST">
                 <h2>Registrarse</h2>
                 <span>Use su correo electrónico para registrarse</span>
                 <div class="container-input">
@@ -111,7 +111,7 @@ if (isset($_SESSION['error_message'])) {
 
     </div>
 
-    <script src="public/js/loginScript.js"></script>
+    <script src="app/public/js/loginScript.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
